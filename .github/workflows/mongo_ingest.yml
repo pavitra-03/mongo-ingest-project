@@ -2,9 +2,7 @@ name: Scheduled MongoDB Ingestion
 
 on:
   schedule:
-    # Runs every 10 minutes
     - cron: '*/10 * * * *'
-  # Allows manual triggers from GitHub UI
   workflow_dispatch:
 
 jobs:
@@ -22,9 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install pymongo dnspython faker
-
-
-        
 
       - name: Run MongoDB Ingestion Script
         env:
