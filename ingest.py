@@ -1,27 +1,27 @@
+import os
+import random
+from datetime import datetime
 import dns.resolver
 from pymongo import MongoClient
 from faker import Faker
-import random
-from datetime import datetime
 
-# Set public DNS resolvers to handle corporate VPN DNS issues
+# Configure DNS resolvers to handle network issues
 dns.resolver.default_resolver = dns.resolver.Resolver(configure=False)
 dns.resolver.default_resolver.nameservers = ['8.8.8.8', '1.1.1.1']
 
 # Initialize Faker generator
 fake = Faker()
 
-# Your MongoDB Atlas URI with simple credentials
-uri = "mongodb+srv://appuser:Pass12345@cluster0.fsr660u.mongodb.net/?retryWrites=true&w=majority"
-
-# Initialize MongoClient with SSL bypass for corporate network/VPN inspection
-client = MongoClient(
-    uri,
-    tls=True,
-    tlsAllowInvalidCertificates=True
-)
+# Retrieve connection URI securely from environment variables
+MONGO_URI = os.getenv("MONGO_URI")
 
 def run_mock_ingestion():
+    if not MONGO_URI:
+        raise ValueError("Error: MONGO_URI environment variable is missing.")
+
+    # Initialize MongoClient securely without disabling SSL verification
+    client = MongoClient(MONGO_URI)
+
     try:
         print("Connecting to MongoDB Atlas...")
         db = client["SecurityDB"]
@@ -40,6 +40,8 @@ def run_mock_ingestion():
                 "product": random.choice(products),
                 "severity": random.choice(severities),
                 "status": random.choice(statuses),
+                "source_ip": fake.ipv4(),
+                "user": fake.user_name(),
                 "timestamp": datetime.utcnow()
             })
 
