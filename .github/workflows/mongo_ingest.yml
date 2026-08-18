@@ -19,7 +19,8 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install pymongo dnspython faker
+        run: |
+          pip install pymongo dnspython faker
 
       - name: Run MongoDB Ingestion Script
         env:
