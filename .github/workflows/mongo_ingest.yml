@@ -23,6 +23,9 @@ jobs:
       - name: Install dependencies
         run: pip install pymongo dnspython faker
 
+
+        
+
       - name: Run MongoDB Ingestion Script
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
