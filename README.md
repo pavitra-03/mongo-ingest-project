@@ -37,7 +37,8 @@ Local Installation & Usage
 To run the ingestion script locally:
 
 *Clone the repository:
-git clone [https://github.com/pavitra-03/mongo-ingest-project.git](https://github.com/pavitra-03/mongo-ingest-project.git)
+git clone [https://github.com/pavitra-03/mongo-ingest-project.git]
+(https://github.com/pavitra-03/mongo-ingest-project.git)
 cd mongo-ingest-project
 
 *Install dependencies:
